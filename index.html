@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday 🎉</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #ffd6e0, #ff9a9e, #fad0c4);
+      overflow: hidden;
+    }
+    .card {
+      position: relative;
+      background: rgba(255,255,255,0.95);
+      padding: 35px 25px 40px;
+      border-radius: 26px;
+      text-align: center;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+      max-width: 360px;
+      width: 90%;
+      animation: pop 0.9s ease-out;
+    }
+    .photo {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin: 0 auto 15px;
+      display: block;
+      box-shadow: 0 12px 30px rgba(255,77,109,0.6);
+      animation: glow 3s ease-in-out infinite;
+    }
+    h1 {
+      font-size: 2.1rem;
+      margin: 10px 0 8px;
+      color: #ff4d6d;
+    }
+    p {
+      font-size: 1.05rem;
+      color: #444;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+    button {
+      margin-top: 22px;
+      padding: 14px 30px;
+      font-size: 1.05rem;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ff4d6d, #ff758f);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 12px 25px rgba(255,77,109,0.5);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    button:active {
+      transform: scale(0.96);
+      box-shadow: 0 6px 15px rgba(255,77,109,0.4);
+    }
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      animation: fall linear forwards;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-10px) rotate(0deg); }
+      100% { transform: translateY(110vh) rotate(360deg); }
+    }
+    @keyframes pop {
+      0% { transform: scale(0.85); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-120vh); opacity: 0; }
+    }
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 12px 30px rgba(255,77,109,0.5); }
+      50% { box-shadow: 0 18px 45px rgba(255,77,109,0.9); }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img src="/birthday-card/images/ehnerdene.png" alt="Enherdene" class="photo" />
+    <h1>🎂 Happy Birthday, Enherdene ❤️</h1>
+    <p>
+Чиний инээмсэглэл чинь ертөнцийг гэрэлтүүлдэг ✨
+Төрсөн өдрийн мэнд хүргэе 🎉</p>
+    <button onclick="celebrate()">Celebrate 🎉</button>
+  </div>
+
+  <script>
+let celebrating = false;
+
+function celebrate() {
+  if (celebrating) return;
+  celebrating = true;
+
+  const btn = document.querySelector('button');
+  btn.disabled = true;
+
+  // Show countdown UI
+  const timerEl = document.createElement('div');
+  timerEl.id = "timer";
+  timerEl.style.position = "fixed";
+  timerEl.style.top = "20px";
+  timerEl.style.left = "50%";
+  timerEl.style.transform = "translateX(-50%)";
+  timerEl.style.fontSize = "2rem";
+  timerEl.style.fontWeight = "bold";
+  timerEl.style.color = "#ff4d6d";
+  document.body.appendChild(timerEl);
+
+  let timeLeft = 6;
+  timerEl.textContent = "Одоо Youtube орно шүү " + timeLeft + "s...";
+
+  // Celebration effects (same as before)
+  function createConfetti() {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = Math.random() * 100 + 'vw';
+    confetti.style.top = '-20px';
+    confetti.style.width = 8 + Math.random() * 12 + 'px';
+    confetti.style.height = 8 + Math.random() * 12 + 'px';
+    confetti.style.background = `hsl(${Math.random() * 360}, 100%, 60%)`;
+    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+    confetti.style.animationDuration = 2 + Math.random() * 3 + 's';
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 6000);
+  }
+
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.textContent = '❤️';
+    heart.style.position = 'absolute';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.bottom = '0';
+    heart.style.fontSize = 20 + Math.random() * 40 + 'px';
+    heart.style.animation = 'floatUp 4s ease-out forwards';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 4000);
+  }
+
+  // Create continuous confetti & hearts
+  const confettiInterval = setInterval(() => {
+    for (let i = 0; i < 5; i++) createConfetti();
+  }, 100);
+
+  const heartInterval = setInterval(() => {
+    for (let i = 0; i < 3; i++) createHeart();
+  }, 300);
+
+
+  // Countdown loop
+  const countdown = setInterval(() => {
+    timeLeft--;
+    timerEl.textContent = "Одоо Youtube орно шүү" + timeLeft + "s...";
+    if (timeLeft <= 0) {
+      clearInterval(countdown);
+      clearInterval(confettiInterval);
+      clearInterval(heartInterval);
+      window.location.href = "https://www.youtube.com/watch?v=GDND88fqt1o&list=RDGDND88fqt1o&start_radio=1";
+    }
+  }, 1000);
+
+}
+</script>
+
+
+
+</body>
+</html>
