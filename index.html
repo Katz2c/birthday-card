@@ -1,184 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Birthday 🎉</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at top, #ffd6e0, #ff9a9e, #fad0c4);
-      overflow: hidden;
-    }
-    .card {
-      position: relative;
-      background: rgba(255,255,255,0.95);
-      padding: 35px 25px 40px;
-      border-radius: 26px;
-      text-align: center;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.25);
-      max-width: 360px;
-      width: 90%;
-      animation: pop 0.9s ease-out;
-    }
-    .photo {
-      width: 150px;
-      height: 150px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin: 0 auto 15px;
-      display: block;
-      box-shadow: 0 12px 30px rgba(255,77,109,0.6);
-      animation: glow 3s ease-in-out infinite;
-    }
-    h1 {
-      font-size: 2.1rem;
-      margin: 10px 0 8px;
-      color: #ff4d6d;
-    }
-    p {
-      font-size: 1.05rem;
-      color: #444;
-      line-height: 1.6;
-      white-space: pre-line;
-    }
-    button {
-      margin-top: 22px;
-      padding: 14px 30px;
-      font-size: 1.05rem;
-      border: none;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #ff4d6d, #ff758f);
-      color: white;
-      cursor: pointer;
-      box-shadow: 0 12px 25px rgba(255,77,109,0.5);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-    button:active {
-      transform: scale(0.96);
-      box-shadow: 0 6px 15px rgba(255,77,109,0.4);
-    }
-    .confetti {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      animation: fall linear forwards;
-    }
-    @keyframes fall {
-      0% { transform: translateY(-10px) rotate(0deg); }
-      100% { transform: translateY(110vh) rotate(360deg); }
-    }
-    @keyframes pop {
-      0% { transform: scale(0.85); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    @keyframes floatUp {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(-120vh); opacity: 0; }
-    }
-    @keyframes glow {
-      0%, 100% { box-shadow: 0 12px 30px rgba(255,77,109,0.5); }
-      50% { box-shadow: 0 18px 45px rgba(255,77,109,0.9); }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Happy Birthday 🎉</title>
+
+<style>
+*{box-sizing:border-box;font-family:'Segoe UI',Tahoma;}
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:radial-gradient(circle at top,#ffd6e0,#ff9a9e,#fad0c4);
+  overflow:hidden;
+}
+
+/* FLIP CONTAINER */
+.card-container{
+  perspective:1200px;
+}
+
+.card{
+  width:360px;
+  height:440px;
+  position:relative;
+  transform-style:preserve-3d;
+  transition:0.8s;
+  cursor:pointer;
+}
+
+.card.flip{
+  transform:rotateY(180deg);
+}
+
+/* FRONT + BACK */
+.card-face{
+  position:absolute;
+  width:100%;
+  height:100%;
+  border-radius:26px;
+  padding:35px 25px;
+  text-align:center;
+  backface-visibility:hidden;
+  background:rgba(255,255,255,0.95);
+  box-shadow:0 25px 50px rgba(0,0,0,0.25);
+}
+
+.back{
+  transform:rotateY(180deg);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+/* IMAGE */
+.photo{
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  object-fit:cover;
+  margin:auto;
+  box-shadow:0 12px 30px rgba(255,77,109,0.6);
+  animation:glow 3s infinite;
+}
+
+h1{color:#ff4d6d;margin:15px 0;}
+p{color:#444;line-height:1.6;white-space:pre-line;}
+
+button{
+  margin-top:20px;
+  padding:14px 30px;
+  border:none;
+  border-radius:999px;
+  font-size:1rem;
+  background:linear-gradient(135deg,#ff4d6d,#ff758f);
+  color:white;
+  cursor:pointer;
+  box-shadow:0 12px 25px rgba(255,77,109,0.5);
+}
+
+/* CONFETTI */
+.confetti{
+  position:absolute;
+  width:10px;height:10px;
+  animation:fall linear forwards;
+}
+
+@keyframes fall{
+  0%{transform:translateY(-10px) rotate(0);}
+  100%{transform:translateY(110vh) rotate(360deg);}
+}
+
+@keyframes floatUp{
+  0%{transform:translateY(0);opacity:1;}
+  100%{transform:translateY(-120vh);opacity:0;}
+}
+
+@keyframes glow{
+  0%,100%{box-shadow:0 12px 30px rgba(255,77,109,0.5);}
+  50%{box-shadow:0 18px 45px rgba(255,77,109,0.9);}
+}
+</style>
 </head>
+
 <body>
-  <div class="card">
-    <img src="/birthday-card/images/ehnerdene.png" alt="Enherdene" class="photo" />
-    <h1>🎂 Happy Birthday, Enherdene ❤️</h1>
-    <p>
-Чиний инээмсэглэл чинь ертөнцийг гэрэлтүүлдэг ✨
-Төрсөн өдрийн мэнд хүргэе 🎉</p>
-    <button onclick="celebrate()">Celebrate 🎉</button>
+
+<div class="card-container" onclick="flipCard()">
+  <div class="card" id="card">
+
+    <!-- FRONT -->
+    <div class="card-face front">
+      <img src="/birthday-card/images/ehnerdene.png" class="photo"/>
+      <h1>🎂 Happy Birthday ❤️</h1>
+      <p>
+Чиний инээмсэглэл маш гоё шүү.
+Төрсөн өдрийн мэнд хүргэе 🎉
+      </p>
+      <button onclick="event.stopPropagation(); celebrate()">Celebrate 🎉</button>
+    </div>
+
+    <!-- BACK -->
+    <div class="card-face back">
+      <h1>💖 Secret xd 💖</h1>
+      <p>
+Би чамд хайртай дуртай гэж худлаа хэлэхгүй ээ  гэхдээ 
+Яагаад ч юм хамт баймаар Зүгээр л чамайг хараад л баймаар 
+чиний инээдийг чинь хараад баймаар тийм л хүн. Анхны харцаар л
+тэр ауранд чинь өртөж татагдсан . Яг үнэндээ чмг ирланд ч явуулмааргүй
+байна .Хамт амьдармаар байна болохгүйгээс болох хүртэл нь 
+      </p>
+    </div>
+
   </div>
+</div>
 
-  <script>
-let celebrating = false;
+<script>
+/* FLIP */
+function flipCard(){
+  document.getElementById("card").classList.toggle("flip");
+}
 
-function celebrate() {
-  if (celebrating) return;
-  celebrating = true;
+/* CELEBRATION */
+let celebrating=false;
 
-  const btn = document.querySelector('button');
-  btn.disabled = true;
+function celebrate(){
+if(celebrating)return;
+celebrating=true;
 
-  // Show countdown UI
-  const timerEl = document.createElement('div');
-  timerEl.id = "timer";
-  timerEl.style.position = "fixed";
-  timerEl.style.top = "20px";
-  timerEl.style.left = "50%";
-  timerEl.style.transform = "translateX(-50%)";
-  timerEl.style.fontSize = "2rem";
-  timerEl.style.fontWeight = "bold";
-  timerEl.style.color = "#ff4d6d";
-  document.body.appendChild(timerEl);
+const btn=document.querySelector("button");
+btn.disabled=true;
 
-  let timeLeft = 6;
-  timerEl.textContent = "Одоо Youtube орно шүү " + timeLeft + "s...";
+/* TIMER */
+const timer=document.createElement("div");
+timer.style.position="fixed";
+timer.style.top="20px";
+timer.style.left="50%";
+timer.style.transform="translateX(-50%)";
+timer.style.fontSize="2rem";
+timer.style.fontWeight="bold";
+timer.style.color="#ff4d6d";
+document.body.appendChild(timer);
 
-  // Celebration effects (same as before)
-  function createConfetti() {
-    const confetti = document.createElement('div');
-    confetti.className = 'confetti';
-    confetti.style.left = Math.random() * 100 + 'vw';
-    confetti.style.top = '-20px';
-    confetti.style.width = 8 + Math.random() * 12 + 'px';
-    confetti.style.height = 8 + Math.random() * 12 + 'px';
-    confetti.style.background = `hsl(${Math.random() * 360}, 100%, 60%)`;
-    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-    confetti.style.animationDuration = 2 + Math.random() * 3 + 's';
-    document.body.appendChild(confetti);
-    setTimeout(() => confetti.remove(), 6000);
-  }
+let time=6;
+timer.textContent="Одоо Youtube орно "+time+"s";
 
-  function createHeart() {
-    const heart = document.createElement('div');
-    heart.textContent = '❤️';
-    heart.style.position = 'absolute';
-    heart.style.left = Math.random() * 100 + 'vw';
-    heart.style.bottom = '0';
-    heart.style.fontSize = 20 + Math.random() * 40 + 'px';
-    heart.style.animation = 'floatUp 4s ease-out forwards';
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 4000);
-  }
+/* CONFETTI */
+function confetti(){
+ const c=document.createElement("div");
+ c.className="confetti";
+ c.style.left=Math.random()*100+"vw";
+ c.style.width=8+Math.random()*12+"px";
+ c.style.height=c.style.width;
+ c.style.background=`hsl(${Math.random()*360},100%,60%)`;
+ c.style.animationDuration=2+Math.random()*3+"s";
+ document.body.appendChild(c);
+ setTimeout(()=>c.remove(),6000);
+}
 
-  // Create continuous confetti & hearts
-  const confettiInterval = setInterval(() => {
-    for (let i = 0; i < 5; i++) createConfetti();
-  }, 100);
+/* HEART */
+function heart(){
+ const h=document.createElement("div");
+ h.innerHTML="❤️";
+ h.style.position="absolute";
+ h.style.left=Math.random()*100+"vw";
+ h.style.bottom="0";
+ h.style.fontSize=20+Math.random()*40+"px";
+ h.style.animation="floatUp 4s forwards";
+ document.body.appendChild(h);
+ setTimeout(()=>h.remove(),4000);
+}
 
-  const heartInterval = setInterval(() => {
-    for (let i = 0; i < 3; i++) createHeart();
-  }, 300);
+const cInt=setInterval(()=>{for(let i=0;i<5;i++)confetti()},100);
+const hInt=setInterval(()=>{for(let i=0;i<3;i++)heart()},300);
 
+/* COUNTDOWN */
+const cd=setInterval(()=>{
+ time--;
+ timer.textContent="Одоо Youtube орно "+time+"s";
 
-  // Countdown loop
-  const countdown = setInterval(() => {
-    timeLeft--;
-    timerEl.textContent = "Одоо Youtube орно шүү" + timeLeft + "s...";
-    if (timeLeft <= 0) {
-      clearInterval(countdown);
-      clearInterval(confettiInterval);
-      clearInterval(heartInterval);
-      window.location.href = "https://www.youtube.com/watch?v=GDND88fqt1o&list=RDGDND88fqt1o&start_radio=1";
-    }
-  }, 1000);
-
+ if(time<=0){
+   clearInterval(cd);
+   clearInterval(cInt);
+   clearInterval(hInt);
+   window.location.href="https://www.youtube.com/watch?v=GDND88fqt1o";
+ }
+},1000);
 }
 </script>
-
-
 
 </body>
 </html>
